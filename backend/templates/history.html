@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction History - KrishiMitra</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body style="font-family: Arial, sans-serif; padding: 20px;">
+
+    <nav style="margin-bottom: 20px;">
+        <a href="/" style="margin-right: 15px;">🏠 Home</a>
+        <a href="/form" style="margin-right: 15px;">🌱 Crop Form</a>
+        <a href="/history">📜 History</a>
+    </nav>
+
+    <h2>📜 Prediction History</h2>
+
+    {% if history %}
+        <table border="1" cellpadding="10" cellspacing="0">
+            <tr>
+                <th>Soil Type</th>
+                <th>Rainfall</th>
+                <th>Temperature</th>
+                <th>Prediction</th>
+                <th>Timestamp</th>
+            </tr>
+            {% for row in history %}
+            <tr>
+                <td>{{ row.soil_type }}</td>
+                <td>{{ row.rainfall }}</td>
+                <td>{{ row.temperature }}</td>
+                <td>{{ row.prediction }}</td>
+                <td>{{ row.timestamp }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No history found yet.</p>
+    {% endif %}
+
+    <hr style="margin: 40px 0;">
+
+    <h3>📊 Rainfall & Temperature Trends</h3>
+    <canvas id="rainTempChart" width="600" height="300"></canvas>
+
+    <h3 style="margin-top: 40px;">🌾 Predicted Crops Count</h3>
+    <canvas id="cropChart" width="600" height="300"></canvas>
+
+    <script>
+        const predictionData = JSON.parse('{{ predictions | tojson | safe }}');
+
+        // Rainfall & Temperature Chart
+        const ctx1 = document.getElementById('rainTempChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: predictionData.labels,
+                datasets: [
+                    {
+                        label: 'Rainfall (mm)',
+                        data: predictionData.rainfall,
+                        borderColor: 'blue',
+                        fill: false
+                    },
+                    {
+                        label: 'Temperature (°C)',
+                        data: predictionData.temperature,
+                        borderColor: 'red',
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        // Crop Count Chart
+        const cropCounts = {};
+        predictionData.crops.forEach(crop => {
+            cropCounts[crop] = (cropCounts[crop] || 0) + 1;
+        });
+
+        const ctx2 = document.getElementById('cropChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(cropCounts),
+                datasets: [{
+                    label: 'Predicted Count',
+                    data: Object.values(cropCounts),
+                    backgroundColor: 'green'
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+
+</body>
+</html>

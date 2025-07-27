@@ -1,0 +1,4 @@
+timestamp,soil_type,rainfall,temperature,predicted_crop
+2025-07-27 14:40:56.175287,Loamy,400.0,50.0,Wheat
+2025-07-27 14:44:21.018912,Loamy,220.0,50.0,Rice
+2025-07-27 14:53:58.982465,Loamy,400.0,10.0,Wheat

@@ -1,28 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>KrishiMitra - Crop Prediction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f3f9f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            margin: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        form {
+            margin-top: 30px;
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        select, input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .prediction-box {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e6f4ea;
+            border: 2px dashed #4CAF50;
+            border-radius: 10px;
+            text-align: center;
+            width: 350px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Crop Prediction Form</h2>
-    <form action="/predict" method="post">
+    <h1>🌱 KrishiMitra Crop Predictor</h1>
+    <a href="/">
+         <button style="margin-bottom: 20px;">⬅ Back to Home</button>
+    </a>
+
+
+    <form action="/predict_form" method="post">
         <label for="soil_type">Soil Type:</label>
-        <select name="soil_type" id="soil_type" required>
+        <select name="soil_type" required>
             <option value="Loamy">Loamy</option>
             <option value="Sandy">Sandy</option>
             <option value="Clay">Clay</option>
         </select>
-        <br><br>
 
         <label for="rainfall">Rainfall (mm):</label>
-        <input type="number" name="rainfall" id="rainfall" required>
-        <br><br>
+        <input type="number" name="rainfall" required>
 
         <label for="temperature">Temperature (°C):</label>
-        <input type="number" name="temperature" id="temperature" required>
-        <br><br>
+        <input type="number" name="temperature" required>
 
         <input type="submit" value="Predict Crop">
     </form>
+
+    {% if prediction %}
+    <div class="prediction-box">
+        <h2>🌾 Predicted Crop: <span style="color: #2e7d32;">{{ prediction }}</span></h2>
+        {% if tip %}
+          <p style="margin-top: 10px; font-style: italic; color: #555;">🌿 Tip: {{ tip }}</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    
+
 </body>
 </html>
+
