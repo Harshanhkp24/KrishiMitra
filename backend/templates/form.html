@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>KrishiMitra - Crop Predictor</title>
+    <title>KrishiMitra - Crop Prediction</title>
 </head>
 <body>
-    <h1>🌿 KrishiMitra Crop Prediction</h1>
-    <form action="/predict-form" method="post">
-        <label>Soil Type:</label>
-        <select name="soil_type">
+    <h2>Crop Prediction Form</h2>
+    <form action="/predict" method="post">
+        <label for="soil_type">Soil Type:</label>
+        <select name="soil_type" id="soil_type" required>
             <option value="Loamy">Loamy</option>
             <option value="Sandy">Sandy</option>
             <option value="Clay">Clay</option>
-        </select><br><br>
+        </select>
+        <br><br>
 
-        <label>Rainfall (mm):</label>
-        <input type="number" name="rainfall" required><br><br>
+        <label for="rainfall">Rainfall (mm):</label>
+        <input type="number" name="rainfall" id="rainfall" required>
+        <br><br>
 
-        <label>Temperature (°C):</label>
-        <input type="number" name="temperature" required><br><br>
+        <label for="temperature">Temperature (°C):</label>
+        <input type="number" name="temperature" id="temperature" required>
+        <br><br>
 
         <input type="submit" value="Predict Crop">
     </form>
-
-    {% if prediction %}
-        <h2>✅ Recommended Crop: {{ prediction }}</h2>
-    {% endif %}
 </body>
 </html>

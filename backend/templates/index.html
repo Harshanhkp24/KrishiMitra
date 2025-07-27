@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KrishiMitra - Crop Prediction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f8f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #2e7d32;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 320px;
+        }
+
+        label {
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .prediction-box {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            width: 350px;
+            text-align: center;
+        }
+
+        .prediction-box h3 {
+            color: #2e7d32;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌱 KrishiMitra Crop Predictor</h1>
+
+    <form action="/predict_form" method="post">
+        <label for="soil_type">Soil Type:</label>
+        <select name="soil_type" required>
+            <option value="Loamy">Loamy</option>
+            <option value="Sandy">Sandy</option>
+            <option value="Clay">Clay</option>
+        </select>
+
+        <label for="rainfall">Rainfall (mm):</label>
+        <input type="number" name="rainfall" required>
+
+        <label for="temperature">Temperature (°C):</label>
+        <input type="number" name="temperature" required>
+
+        <input type="submit" value="Predict Crop">
+    </form>
+
+    {% if prediction %}
+        <div class="prediction-box">
+            <h3>🌾 Predicted Crop: {{ prediction }}</h3>
+        </div>
+    {% endif %}
+</body>
+</html>
